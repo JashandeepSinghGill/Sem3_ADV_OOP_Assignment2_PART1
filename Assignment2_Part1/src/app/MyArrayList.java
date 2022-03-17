@@ -43,7 +43,7 @@ public class MyArrayList<E> implements ListADT<E> {
 		return size;
 	}
 	/**
-	 * This methood clears the whole arrayList
+	 * This method clears the whole arrayList
 	 */
 	@Override
 	public void clear() {
@@ -154,6 +154,11 @@ public class MyArrayList<E> implements ListADT<E> {
 		Object getValue = array[index];
 		// deleting the element
 		array[index] = null;
+		
+		//this loop move all the items in the array to the left to fill the space created by the deleted element
+		for (int i = 0; i < this.size; i++) {
+			array[index] = array[index+1];
+		}
 		
 		//this loop check for the last element in the list to set the size of the list to that element
 		for (int i = index-1; i >= 0; i--) {

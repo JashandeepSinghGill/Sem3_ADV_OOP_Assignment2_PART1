@@ -91,9 +91,15 @@ class MyArrayListTests {
 	@Test
 	void testAddToMiddle() {
 
-		arr.add(5, "A");
+		arr.add("C");
+		arr.add("A");
+		arr.add("L");
+		arr.add("G");
+		arr.add("R");
+		arr.add("Y");
+		arr.add(4, "A");
 		
-		assertEquals("A", arr.get(5));
+		assertEquals("A", arr.get(4));
 		
 	}
 
@@ -299,7 +305,7 @@ class MyArrayListTests {
 		arr.add("R");
 		arr.add("Y");
 		
-		assertThrows(UnsupportedOperationException.class, ()-> {
+		assertThrows(NullPointerException.class, ()-> {
 			arr.remove("X");
 		});
 	}
@@ -400,46 +406,27 @@ class MyArrayListTests {
 	
 
 	/**
-	 * Test method for {@link app.MyArrayList#contains(java.lang.Object)}.
+	 * Test method for {@link app.MyArrayList#toArray(E[])}.
 	 */
 	@Test
-	void testSizeChangeAfterRemove() {
-		arr.add(0,"C");
-		arr.add(1,"A");
-		arr.add(2,"L");
-		arr.add(3,"G");
-		arr.add(4,"A");
-		arr.add(5,"R");
-		arr.add(9,"Y");
+	void testToArrayEArray() {
 		
-		arr.remove("Y");
-		
-		assertEquals(6, arr.size());
 	}
-	
 
-//	/**
-//	 * Test method for {@link app.MyArrayList#toArray(E[])}.
-//	 */
-//	@Test
-//	void testToArrayEArray() {
-//		fail("Not yet implemented");
-//	}
-//
-//	/**
-//	 * Test method for {@link app.MyArrayList#toArray()}.
-//	 */
-//	@Test
-//	void testToArray() {
-//		fail("Not yet implemented");
-//	}
-//
-//	/**
-//	 * Test method for {@link app.MyArrayList#iterator()}.
-//	 */
-//	@Test
-//	void testIterator() {
-//		fail("Not yet implemented");
-//	}
+	/**
+	 * Test method for {@link app.MyArrayList#toArray()}.
+	 */
+	@Test
+	void testToArray() {
+		fail("Not yet implemented");
+	}
+
+	/**
+	 * Test method for {@link app.MyArrayList#iterator()}.
+	 */
+	@Test
+	void testIterator() {
+		fail("Not yet implemented");
+	}
 
 }

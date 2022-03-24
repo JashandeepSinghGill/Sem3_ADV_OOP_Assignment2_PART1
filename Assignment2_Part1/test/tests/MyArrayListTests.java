@@ -274,6 +274,23 @@ class MyArrayListTests {
 			arr.remove(8);
 		});
 	}
+	/**
+	 * Test method for {@link app.MyArrayList#remove(int)}.
+	 */
+	@Test
+	void testRemoveAndLastElementCheck() {
+		arr.add("C");
+		arr.add("A");
+		arr.add("L");
+		arr.add("G");
+		arr.add("A");
+		arr.add("R");
+		arr.add("Y");
+		
+		arr.remove(4);
+		
+		assertEquals("Y", arr.get(5));
+	}
 
 
 	/**
@@ -405,28 +422,28 @@ class MyArrayListTests {
 	}
 	
 
-	/**
-	 * Test method for {@link app.MyArrayList#toArray(E[])}.
-	 */
-	@Test
-	void testToArrayEArray() {
-		
-	}
-
-	/**
-	 * Test method for {@link app.MyArrayList#toArray()}.
-	 */
-	@Test
-	void testToArray() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for {@link app.MyArrayList#iterator()}.
-	 */
-	@Test
-	void testIterator() {
-		fail("Not yet implemented");
-	}
+//	/**
+//	 * Test method for {@link app.MyArrayList#toArray(E[])}.
+//	 */
+//	@Test
+//	void testToArrayEArray() {
+//		
+//	}
+//
+//	/**
+//	 * Test method for {@link app.MyArrayList#toArray()}.
+//	 */
+//	@Test
+//	void testToArray() {
+//		fail("Not yet implemented");
+//	}
+//
+//	/**
+//	 * Test method for {@link app.MyArrayList#iterator()}.
+//	 */
+//	@Test
+//	void testIterator() {
+//		fail("Not yet implemented");
+//	}
 
 }

@@ -49,43 +49,20 @@ public class MyArrayList<E> implements ListADT<E> {
 		array = null;
 		size = 0;
 	}
-//	/**
-//	 * This method counts the elements in the List
-//	 * @return the count of elements
-//	 */
-//	private int elementCount()
-//	{
-//		int count = 0;
-//		for (int i = 0; i < array.length; i++) {
-//			if (array[i] != null) {
-//				count++;
-//			}
-//		}
-//		return count;
-//	}
-//	/**
-//	 * This Method adds the new element to the array
-//	 */
+
 	@Override
 	public boolean add(int index, E toAdd) throws NullPointerException, IndexOutOfBoundsException {
-		int indexDiff = 0;
 		int t =10;
 		
-		//checks if the index to which the element is being added is less than the length of the Array
-		if(this.size==array.length)
-		{
-			//if YES, It adds the element
-			array[index] = toAdd;
-		}
-		else if(index>size){
+		if(index<0 || index>size){
 			throw new IndexOutOfBoundsException();
 		}
 		else if(toAdd == null){
 			throw new NullPointerException();
 		}
-		else
-		{
-			//If No, It creates a new Array with size that can contain 10 more elements
+
+		else if(this.size==array.length)
+			{//If No, It creates a new Array with size that can contain 10 more elements
 			Object[] tempArr  = new Object[array.length];
 			t += 10;
 			//then we transfer all the elements from the old array to the new array by using a Temp array
@@ -102,6 +79,13 @@ public class MyArrayList<E> implements ListADT<E> {
 			//Then we add the element
 			array[index] = toAdd;
 			this.size++;
+				
+			}
+		else
+		{
+			//if No, It adds the element
+			array[index] = toAdd;
+			this.size++;
 		}
 		return true;
 	}
@@ -116,7 +100,10 @@ public class MyArrayList<E> implements ListADT<E> {
 
 	@Override
 	public boolean addAll(ListADT<? extends E> toAdd) throws NullPointerException {
-		
+		if(toAdd == null)
+		{
+			throw new NullPointerException();
+		}
 		for (int i = 0; i < toAdd.size(); i++) {
 			add(toAdd.get(i));
 		}
@@ -144,9 +131,10 @@ public class MyArrayList<E> implements ListADT<E> {
 		array[index] = null;
 		
 		//this loop move all the items in the array to the left to fill the space created by the deleted element
-		for (int i = 0; i < this.size; i++) {
-			array[index] = array[index+1];
+		for (int i = index; i < this.size-1; i++) {
+			array[i] = array[i+1];
 		}
+		array[this.size-1]=null;
 		size--;
 		return (E)getValue;
 	}

@@ -53,7 +53,7 @@ public class MyArrayList<E> implements ListADT<E> {
 	@Override
 	public boolean add(int index, E toAdd) throws NullPointerException, IndexOutOfBoundsException {
 		int t =10;
-		
+		 
 		if(index<0 || index>size){
 			throw new IndexOutOfBoundsException();
 		}
@@ -107,7 +107,7 @@ public class MyArrayList<E> implements ListADT<E> {
 		for (int i = 0; i < toAdd.size(); i++) {
 			add(toAdd.get(i));
 		}
-
+ 
 		return true;
 	}
 

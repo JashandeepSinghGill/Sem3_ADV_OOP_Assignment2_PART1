@@ -9,13 +9,13 @@ import java.util.Scanner;
  
 
 /**
+ * This class is XMLPraser that parses the xml code by taking the XML code and checking all the tags and to see if the are valid or not
+ * 
  * @author JashanGill
  *
  */
 public class XMLPraser {
-	/*The case not solved : 
-	 * 	<p><p></p>
-	 */
+	
 	private Stack<String> stack;
 	private String line;
 	private String msg;
@@ -26,13 +26,24 @@ public class XMLPraser {
 		this.line="";
 		this.msg= "";
 	}
-	
+	/**
+	 * This method starts the Parser and moves the cursor to the Parser Method
+	 * 
+	 * @param filePath It takes in the path location of the XML file
+	 * @throws FileNotFoundException	Error thrown if the file is not found
+	 */
 	public void start(String filePath) throws FileNotFoundException {
 		
 	//Calling the Parser method with the File Path as the variable
 			Parser(filePath);
 	}
-
+	/**
+	 * This method runs the file in a Scanner While Loop that would take every line of the file until the end.
+	 * Then we convert the line to an array of strings and iterate over it to look for the '<' and '>' to identify the tags in XML
+	 * 
+	 * @param filePath	filePath It takes in the path location of the XML file
+	 * @throws FileNotFoundException	Error thrown if the file is not found
+	 */
 	private void Parser(String filePath) throws FileNotFoundException {
 		boolean openCheck = false;
 		int bracketsCount = 0;
@@ -48,8 +59,10 @@ public class XMLPraser {
 			String line = in.nextLine();
 			this.line = line;
 			bracketsCount = 0;
+			//converting the String line to char array named 'l'
 			char[] l = line.toCharArray();
 			
+			//Loop to check for any Loose Brackets in the code
 			for (int i = 0; i < l.length; i++) {
 				if (l[i]=='<') {
 					bracketsCount++;
@@ -64,13 +77,13 @@ public class XMLPraser {
 			
 			for (int i = 0; i < l.length; i++) {
 				if (l[i]=='<' && openCheck == false) {
-					tagStart = i+1;
+					tagStart = i;
 					openCheck = true;
 				}
 				if (l[i]=='>' && openCheck == true) {
 					tagEnd = i; 
 					
-					tag = line.substring(tagStart, tagEnd);
+					tag = line.substring(tagStart+1, tagEnd);
 					if(tag.equals("")) {
 						continue;
 					}
@@ -89,8 +102,12 @@ public class XMLPraser {
 		System.out.println(msg);
 	}
 	
-	
-	private void TagValidator(String tag) throws FileNotFoundException {
+	/**
+	 * This method runs a check on each tag extracted by the Parser and checks if the tag is valid according to the syntax rules
+	 * 
+	 * @param tag	the Tag provided by the Parser without the brackets
+	 */
+	private void TagValidator(String tag){
 		String tagName = tag.contains(" ")?tag.substring(0, tag.indexOf(" ")):tag;
 		String openTag ="";
 		String closeTag = "";
@@ -112,7 +129,8 @@ public class XMLPraser {
 			msg += "Tag ignored at line:\n"+ this.line+"\n\n";
 		}
 		else if(tag.endsWith("/")){
-			tag = tag.substring(0, tag.length() - 1); 
+			tag = tag.substring(0, tag.length() - 1);
+			msg += "Self Closing Tag ignored at line:\n"+ this.line+"\n\n";
 		}
 		else if(tag.startsWith("/")){
 			closeTag = tagName.substring(1);
@@ -136,29 +154,5 @@ public class XMLPraser {
 		else {
 			msg = "Code Prased. No error Found";
 		}
-		
 	}
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 }

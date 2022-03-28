@@ -21,13 +21,13 @@ public class App {
 		System.out.println("Welcome, This is XML Parser.");
 		System.out.println("Enter file Path: ");
 		
-//		//Creating the Scanner Class to Fetch The XML File path from user
-//		Scanner sc = new Scanner(System.in);
-//		String filePath = sc.nextLine();
-//		sc.close();
+		//Creating the Scanner Class to Fetch The XML File path from user
+		Scanner sc = new Scanner(System.in);
+		String filePath = sc.nextLine();
+		sc.close();
 		
 		XMLPraser praser = new XMLPraser();
-		praser.start("./res/test1.xml");
-		//praser.start(filePath);
+		//praser.start("./res/test1.xml");
+		praser.start(filePath);
 	}
 }

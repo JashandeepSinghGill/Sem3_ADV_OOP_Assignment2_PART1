@@ -4,6 +4,7 @@
 package app;
 
 import java.lang.reflect.Array;
+import java.util.NoSuchElementException;
 
 import utilities.Iterator;
 import utilities.ListADT;
@@ -15,8 +16,6 @@ import utilities.ListADT;
 public class MyArrayList<E> implements ListADT<E> {
 	//the actual size of the arrayList
 	private int size;
-	//The length of the array that contains the ArrayList
-	private int arrayLength;
 	//The array that contains the ArrayList
 	private  Object[] array;
 
@@ -31,8 +30,7 @@ public class MyArrayList<E> implements ListADT<E> {
 	public MyArrayList() {
 	
 		this.size = 0;
-		this.arrayLength = 10;
-		this.array = new Object[arrayLength];
+		this.array = new Object[10];
 	}
 	/**
 	 * This function returns the size of the arrrayList
@@ -51,43 +49,27 @@ public class MyArrayList<E> implements ListADT<E> {
 		array = null;
 		size = 0;
 	}
-	/**
-	 * This method counts the elements in the List
-	 * @return the count of elements
-	 */
-	private int elementCount()
-	{
-		int count = 0;
-		for (int i = 0; i < array.length; i++) {
-			if (array[i] != null) {
-				count++;
-			}
-		}
-		return count;
-	}
-	/**
-	 * This Method adds the new element to the array
-	 */
+
 	@Override
 	public boolean add(int index, E toAdd) throws NullPointerException, IndexOutOfBoundsException {
-		int indexDiff = 0;
-		
-		//checks if the index to which the element is being added is less than the length of the Array
-		if(this.size!=this.arrayLength && index<this.arrayLength)
-		{
-			//if YES, It adds the element
-			array[index] = toAdd;
+		int t =10;
+		 
+		if(index<0 || index>size){
+			throw new IndexOutOfBoundsException();
 		}
-		else
-		{
-			//If No, It creates a new Array with size that can contain 10 more elements
-			Object[] tempArr  = new Object[this.arrayLength];
-			arrayLength += 10;
+		else if(toAdd == null){
+			throw new NullPointerException();
+		}
+
+		else if(this.size==array.length)
+			{//If No, It creates a new Array with size that can contain 10 more elements
+			Object[] tempArr  = new Object[array.length];
+			t += 10;
 			//then we transfer all the elements from the old array to the new array by using a Temp array
 			for (int i = 0; i < array.length; i++) {
 				tempArr[i] = array[i];
 			}
-			array = new Object[arrayLength];
+			array = new Object[t];
 			
 			for (int i = 0; i < tempArr.length; i++) {
 				array[i] = tempArr[i];
@@ -95,26 +77,16 @@ public class MyArrayList<E> implements ListADT<E> {
 			tempArr = null;
 			
 			//Then we add the element
-			array[index] = toAdd;	
-		}
-		//this is an additional component that updates the size of the arrayList 
-		/*
-		 * For Example:
-		 * if list has only one element at index 5 the the size of the List should be 6 not 1
-		 * and, if the list has one element at a index 3 and the new one is added at the index 6 then the size should be 7 not 5
-		 */
-		for (int i = index-1; i >= 0; i--) {
-			if (elementCount() == 1) {
-				indexDiff = index;
-				break;
+			array[index] = toAdd;
+			this.size++;
+				
 			}
-			if (array[i] != null) {
-				indexDiff = index - i - 1;
-				break;
-			}
+		else
+		{
+			//if No, It adds the element
+			array[index] = toAdd;
+			this.size++;
 		}
-		this.size += indexDiff+1;
-		
 		return true;
 	}
 	/**
@@ -128,11 +100,14 @@ public class MyArrayList<E> implements ListADT<E> {
 
 	@Override
 	public boolean addAll(ListADT<? extends E> toAdd) throws NullPointerException {
-		
+		if(toAdd == null)
+		{
+			throw new NullPointerException();
+		}
 		for (int i = 0; i < toAdd.size(); i++) {
 			add(toAdd.get(i));
 		}
-
+ 
 		return true;
 	}
 
@@ -147,7 +122,7 @@ public class MyArrayList<E> implements ListADT<E> {
 
 	@Override
 	public E remove(int index) throws IndexOutOfBoundsException {
-		if(index > this.size-1) {
+		if(index > this.size-1 || index<0) {
 			throw new IndexOutOfBoundsException();
 		}
 		// this the removed element that needs to be returned by the method
@@ -156,20 +131,11 @@ public class MyArrayList<E> implements ListADT<E> {
 		array[index] = null;
 		
 		//this loop move all the items in the array to the left to fill the space created by the deleted element
-		for (int i = 0; i < this.size; i++) {
-			array[index] = array[index+1];
+		for (int i = index; i < this.size-1; i++) {
+			array[i] = array[i+1];
 		}
-		
-		//this loop check for the last element in the list to set the size of the list to that element
-		for (int i = index-1; i >= 0; i--) {
-			if (array[i] != null) {
-				this.size = i+1;
-				break;
-			}
-		//this if will see if the element removed was the last element then set List size to zero 	
-		}if(elementCount() == 0) {
-			this.size = 0;
-		}
+		array[this.size-1]=null;
+		size--;
 		return (E)getValue;
 	}
 
@@ -182,7 +148,7 @@ public class MyArrayList<E> implements ListADT<E> {
 			}
 		}
 		if(indexToBeRemoved == -1) {
-			throw new UnsupportedOperationException();
+			throw new NullPointerException();
 		}
 		return remove(indexToBeRemoved);
 	}
@@ -237,7 +203,28 @@ public class MyArrayList<E> implements ListADT<E> {
 	@Override
 	public Iterator<E> iterator() {
 		// TODO Auto-generated method stub
-		return null;
+		return new ArrayBasedIterator();
+	}
+	
+	private class ArrayBasedIterator implements Iterator<E>{
+
+		private int pos;
+
+		@Override
+		public boolean hasNext() {
+		return pos < size;
+		}
+
+
+		@Override
+		public E next() throws NoSuchElementException {
+		if(pos >= size) {
+		throw new NoSuchElementException();
+		}
+		Object toReturn = array[pos];
+		pos++;
+		return (E)toReturn;
+		}
 	}
 }
 

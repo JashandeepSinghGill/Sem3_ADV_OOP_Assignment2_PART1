@@ -1,7 +1,17 @@
 package app;
 
+/**
+ * Handles the nodes for the doubly linked list.
+ * 
+ * @author Manleen Mavi
+ *
+ * @param <E> Specifies the object type to handle the element.
+ */
 public class DLLNode<E> {
+	// Element to store
 	private E element;
+	
+	// Nodes referencing the previous and next nodes
 	private DLLNode<E> previous, next;
 	
 	/**

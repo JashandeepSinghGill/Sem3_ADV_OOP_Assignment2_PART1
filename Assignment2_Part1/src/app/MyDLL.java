@@ -6,12 +6,21 @@ import java.util.NoSuchElementException;
 import utilities.Iterator;
 import utilities.ListADT;
 
+/**
+ * 
+ * Implements the ListADT and create the doubly linked list.
+ * 
+ * @author Manleen Mavi
+ *
+ * @param <E> Specifies the object type to handle the element.
+ */
 public class MyDLL<E> implements ListADT<E>{
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
+	
+	// Reference to head and tail node
 	private DLLNode<E> head, tail;
+	
+	// Reference to the size
 	private int size;
 
 	@Override
@@ -140,9 +149,7 @@ public class MyDLL<E> implements ListADT<E>{
 		
 		DLLNode<E> nodeAtIndex = head;
 		
-		if (index == 0) {
-//			head = head.getNext();
-			
+		if (index == 0) {			
 			//Setting new head
 			head = head.getNext();
 			

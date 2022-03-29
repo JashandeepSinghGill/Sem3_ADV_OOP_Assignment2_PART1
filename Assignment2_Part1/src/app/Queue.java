@@ -32,7 +32,7 @@ public class Queue<E> implements QueueADT<E> {
 	/**
 	 * Enqueue function to add elements into queue
 	 * @param toAdd
-	 * @return none
+	 
 	 * @throws NullPointerException
 	 * */
 	@Override
@@ -52,7 +52,6 @@ public class Queue<E> implements QueueADT<E> {
 	}
 	/**
 	 * Dequeue function to delete elements from queue
-	 * @param none
 	 * @return removeItem
 	 * @throws EmptyQueueException
 	 * */
@@ -75,7 +74,6 @@ public class Queue<E> implements QueueADT<E> {
 	
 	/**
 	 * Peek function to retrieve elements from queue
-	 * @param none
 	 * @return first element of queue
 	 * @throws EmptyQueueException
 	 * */
@@ -96,8 +94,6 @@ public class Queue<E> implements QueueADT<E> {
 	}
 	/**
 	 * Dequeue function to remove all elements from queue
-	 * @param none
-	 * @return none
 	 * */
 
 	@Override
@@ -109,7 +105,6 @@ public class Queue<E> implements QueueADT<E> {
 	
 	/**
 	 * isEmpty function to check whether queue is empty or not.
-	 * @param none
 	 * @return true(If empty), false(if not empty)
 	 * */
 
@@ -187,7 +182,6 @@ public class Queue<E> implements QueueADT<E> {
 	}
 	/**
 	 * isFull method checks whether queue is full or not
-	 * @param none
 	 * @return false (based on condition)
 	 * */
 
@@ -200,7 +194,6 @@ public class Queue<E> implements QueueADT<E> {
 	}
 	/**
 	 * size method returns the size of the queue
-	 * @param none
 	 * @return size of queue
 	 * 
 	 * */

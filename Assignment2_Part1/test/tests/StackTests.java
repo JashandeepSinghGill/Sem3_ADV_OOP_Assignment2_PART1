@@ -111,13 +111,16 @@ class StackTests {
 
 	@Test
 	void testToArray() {
-		fail("Not yet implemented");
+		stack.push("Hello");
+		stack.push("Bye");
+		Object[] copyArray = stack.toArray();
+		assertEquals(copyArray[stack.size - 1], stack.peek());
 	}
 
-	@Test
-	void testToArrayEArray() {
-		fail("Not yet implemented");
-	}
+//	@Test
+//	void testToArrayEArray() {
+//
+//	}
 
 	@Test
 	void testContains() {
@@ -149,15 +152,15 @@ class StackTests {
 	
 	
 
-	@Test
-	void testIterator() {
-		fail("Not yet implemented");
-	}
+//	@Test
+//	void testIterator() {
+//		fail("Not yet implemented");
+//	}
 
-	@Test
-	void testEqualsStackADTOfE() {
-		fail("Not yet implemented");
-	}
+//	@Test
+//	void testEqualsStackADTOfE() {
+//	
+//	}
 
 	@Test
 	void testSizeNonZero() {

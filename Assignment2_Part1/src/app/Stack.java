@@ -1,6 +1,7 @@
 package app;
 
 import java.util.EmptyStackException;
+import java.util.NoSuchElementException;
 
 import utilities.Iterator;
 import utilities.StackADT;
@@ -8,6 +9,7 @@ import utilities.StackADT;
 public class Stack<E> implements StackADT<E> {
 
 	private static final long serialVersionUID = 1L;
+	public int size;
 	
 	/**
 	 * 
@@ -18,6 +20,7 @@ public class Stack<E> implements StackADT<E> {
 	public Stack()
 	{
 		stack = new MyArrayList<E>();
+		size = 0;
 	}
 
 	@Override
@@ -29,6 +32,7 @@ public class Stack<E> implements StackADT<E> {
 		else
 		{
 			stack.add(toAdd);	
+			size++;
 		}
 	}
 	
@@ -44,7 +48,9 @@ public class Stack<E> implements StackADT<E> {
 			E removeItem;
 			removeItem = stack.get(stack.size() - 1);
 			stack.remove(removeItem);
+			size--;
 			return removeItem;
+			
 		}
 	}
 
@@ -62,6 +68,7 @@ public class Stack<E> implements StackADT<E> {
 	@Override
 	public void clear() {
 		stack.clear();
+		size = 0;
 		
 	}
 
@@ -72,13 +79,17 @@ public class Stack<E> implements StackADT<E> {
 
 	@Override
 	public Object[] toArray() {
-		return stack.toArray();
+		Object[] array = stack.toArray();
+		return array;
 	}
 
 	@Override
 	public E[] toArray(E[] holder) throws NullPointerException {
-		// TODO Auto-generated method stub
-		return null;
+		if(holder == null) {
+			throw new NullPointerException();
+		}
+		
+		return stack.toArray(holder);
 	}
 
 	@Override
@@ -100,8 +111,30 @@ public class Stack<E> implements StackADT<E> {
 	@Override
 	public Iterator<E> iterator() {
 		// TODO Auto-generated method stub
-		return null;
-	}
+		return new ArrayBasedIterator();
+		}
+		
+		public class ArrayBasedIterator implements Iterator<E>{
+
+			private int pos;
+
+			@Override
+			public boolean hasNext() {
+			return pos < size;
+			}
+
+
+			@Override
+			public E next() throws NoSuchElementException {
+			if(pos >= size) {
+			throw new NoSuchElementException();
+			}
+			E toReturn = stack.get(pos);
+			pos--;
+			return toReturn;
+			}
+		}
+	
 
 	@Override
 	public boolean equals(StackADT<E> that) {
@@ -114,12 +147,17 @@ public class Stack<E> implements StackADT<E> {
 		{
 			for(int i=0; i<stackSize; i++) {
 				E element1 = stack.get(stack.size() - 1);
-				//E element2 = that.get(that.size() - 1);
+				E element2 = that.peek();
 				
-				//if(element1) = that.get(that.size() - 1))
-				//{
-					
-				//}
+				if(element1 == element2)
+				{
+					stack.remove(element1);
+					that.pop();
+				}
+				else
+				{
+					check = false;
+				}
 			}
 		}
 		else
